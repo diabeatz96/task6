@@ -3,30 +3,13 @@ import { Link } from "react-router-dom";
 import ErrorAlert from "../components/ErrorAlert";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import useBookData from "../hooks/useBookData.js";
 
 const Books = () => {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
-  const getData = async () => {
-    const url = "https://api.matgargano.com/api/books";
-    setLoading(true);
-    setError(false);
-    try {
-      const request = await fetch(url);
-      const response = await request.json();
-      setBooks(response);
-    } catch (e) {
-      setError("Error: " + e.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [loading, error, books] = useBookData();
 
-  useEffect(() => {
-    getData();
-  }, []);
+
 
   return (
     <>
